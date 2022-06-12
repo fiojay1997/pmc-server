@@ -4,9 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	majorDao "pmc_server/dao/postgres/major"
-	dao "pmc_server/dao/postgres/user"
-	"pmc_server/init/postgres"
 	"strconv"
 	"strings"
 
@@ -14,8 +11,11 @@ import (
 	courseEsDao "pmc_server/dao/es/course"
 	classDao "pmc_server/dao/postgres/class"
 	courseDao "pmc_server/dao/postgres/course"
+	majorDao "pmc_server/dao/postgres/major"
 	reviewDao "pmc_server/dao/postgres/review"
 	tagDao "pmc_server/dao/postgres/tag"
+	dao "pmc_server/dao/postgres/user"
+	"pmc_server/init/postgres"
 	"pmc_server/model"
 	"pmc_server/model/dto"
 	"pmc_server/shared"
@@ -25,12 +25,12 @@ func GetCourseList(pn, pSize int) ([]dto.Course, int64, error) {
 	courseList, err := courseDao.GetCourseList(pn, pSize)
 
 	if err != nil {
-		return nil, -1, fmt.Errorf("unable to get the list of course: %+v\n", err)
+		return nil, -1, fmt.Errorf("unable to get the list of course: %+v", err)
 	}
 
 	total, err := courseDao.GetCourseTotal()
 	if err != nil {
-		return nil, -1, fmt.Errorf("unable to get the total of course: %+v\n", err)
+		return nil, -1, fmt.Errorf("unable to get the total of course: %+v", err)
 	}
 
 	courseDtoList := make([]dto.Course, 0)
@@ -39,14 +39,14 @@ func GetCourseList(pn, pSize int) ([]dto.Course, int64, error) {
 		if err != nil {
 			return nil,
 				-1,
-				fmt.Errorf("failed to fetch class list of the course %s becuase %+v\n", course.CatalogCourseName, err)
+				fmt.Errorf("failed to fetch class list of the course %s because %+v", course.CatalogCourseName, err)
 		}
 
 		rating, err := reviewDao.GetCourseOverallRating(course.ID)
 		if err != nil {
 			return nil,
 				-1,
-				fmt.Errorf("failed to fetch course overall rating of the corse %s becuase %+v\n", course.CatalogCourseName, err)
+				fmt.Errorf("failed to fetch course overall rating of the corse %s because %+v", course.CatalogCourseName, err)
 		}
 
 		maxCredit, err := strconv.ParseFloat(course.MaxCredit, 32)

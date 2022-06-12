@@ -5,15 +5,16 @@
 package routes
 
 import (
-	"github.com/gin-gonic/gin"
-	gs "github.com/swaggo/gin-swagger"
-	"github.com/swaggo/gin-swagger/swaggerFiles"
 	"net/http"
 	"pmc_server/controller"
 	_ "pmc_server/docs"
 	"pmc_server/init/logger"
 	"pmc_server/middlewares/auth"
 	"pmc_server/middlewares/err"
+
+	"github.com/gin-gonic/gin"
+	gs "github.com/swaggo/gin-swagger"
+	"github.com/swaggo/gin-swagger/swaggerFiles"
 )
 
 func SetUp(mode string) *gin.Engine {
@@ -61,7 +62,7 @@ func SetUp(mode string) *gin.Engine {
 		r.GET("/course/:id/review", controller.GetCourseReviewListHandler)
 		r.GET("/course/:id/review/:review_id", controller.GetCourseReviewByIDHandler)
 		r.POST("/course/:id/review", controller.PostCourseReviewHandler)
-		//r.PUT("/course/:id/review", controller.UpdateCourseReviewHandler)
+		// r.PUT("/course/:id/review", controller.UpdateCourseReviewHandler)
 		r.POST("/course/:id/review/vote", controller.VoteCourseReviewHandler)
 		r.GET("/course/:id/review/user", controller.GetUserInfoOfCourseReviewHandler)
 

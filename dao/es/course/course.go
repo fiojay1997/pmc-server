@@ -7,11 +7,13 @@ package course
 import (
 	"context"
 	"encoding/json"
-	"github.com/olivere/elastic/v7"
+
 	"pmc_server/init/es"
 	esModel "pmc_server/model/es"
 	"pmc_server/shared"
 	"unicode"
+
+	"github.com/olivere/elastic/v7"
 )
 
 // BoolQuery represents the entity of a boolean query in Elasticsearch
